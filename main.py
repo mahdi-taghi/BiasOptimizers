@@ -51,7 +51,34 @@ x_train.to_csv('X_train.csv', index=False)
 x_test.to_csv('X_test.csv', index=False)
 y_train.to_csv('y_train.csv', index=False)
 y_test.to_csv('y_test.csv', index=False)
-print("x_train shape:", x_train.shape)
-print("y_train shape:", y_train.shape)
-print("x_test shape:", x_test.shape)
-print("y_test shape:", y_test.shape)
+
+sns.set(style="whitegrid")
+
+plt.figure(figsize=(10, 6))
+for sigma_max in df['sigma_max'].unique():
+    for delta_u in df['delta_u'].unique():
+        subset = df[(df['sigma_max'] == sigma_max) & (df['delta_u'] == delta_u)]
+        plt.plot(subset['delta'], subset['traction'], label=f'σ_max={sigma_max/1e6} MPa, δ_u={delta_u*1e3} mm')
+
+plt.title('Traction-Separation Law (TSL)')
+plt.xlabel('Separation (δ)')
+plt.ylabel('Traction (T)')
+plt.legend(loc='best', fontsize='small')
+plt.grid(True)
+plt.savefig('Traction-Separation Law (TSL).png', bbox_inches=None)
+
+plt.show()
+
+plt.figure(figsize=(10, 6))
+for alpha in df['alpha'].unique():
+    for delta_u in df['delta_u'].unique():
+        subset = df[(df['alpha'] == alpha) & (df['delta_u'] == delta_u)]
+        plt.plot(subset['delta'], subset['damage'], label=f'α={alpha}, δ_u={delta_u*1e3} mm')
+
+plt.title('Damage vs. Separation')
+plt.xlabel('Separation (δ)')
+plt.ylabel('Damage (D)')
+plt.legend(loc='best', fontsize='small')
+plt.grid(True)
+plt.savefig('Damage vs. Separation.png', bbox_inches=None)
+plt.show()
