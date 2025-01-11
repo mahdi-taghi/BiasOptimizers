@@ -263,3 +263,49 @@ plt.title('ANN1 - Actual vs Predicted Damage')
 plt.tight_layout()
 plt.savefig('ANN_p.png',bbox_inches=None)
 plt.show()
+
+
+
+
+
+X = df[['sigma_max', 'delta_u', 'delta_max', 'alpha', 'delta']].values
+y = df['damage'].values.reshape(-1, 1)
+
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model1 = MLPRegressor(hidden_layer_sizes=(100, 50, 25), activation='relu', solver='adam', learning_rate_init=0.001, max_iter=100, batch_size=32, random_state=42)
+
+model1.fit(X_train, y_train.ravel())
+
+train_loss1 = model1.loss_
+y_pred1 = model1.predict(X_test)
+test_loss1 = np.mean((y_test - y_pred1) ** 2)
+test_mae1 = np.mean(np.abs(y_test - y_pred1))
+
+print(f'ANN1 - Train Loss: {train_loss1}')
+print(f'ANN1 - Test Loss: {test_loss1}')
+print(f'ANN1 - Test MAE: {test_mae1}')
+
+plt.figure(figsize=(12, 6))
+
+plt.subplot(2, 1, 1)
+plt.plot(model1.loss_curve_, label='Train Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.title('ANN1 - Loss vs Epoch')
+
+plt.subplot(2, 1, 2)
+plt.plot(y_test, label='Actual')
+plt.plot(y_pred1, label='Predicted')
+plt.xlabel('Samples')
+plt.ylabel('Damage')
+plt.legend()
+plt.title('ANN1 - Actual vs Predicted Damage')
+
+plt.tight_layout()
+plt.savefig('ANN_p2.png',bbox_inches=None)
+plt.show()
