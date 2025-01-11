@@ -22,7 +22,7 @@ Install the required libraries using:
 `
 pip install numpy pandas scikit-learn matplotlib seaborn tensorflow
 `
-###Dataset Generation
+### Dataset Generation
 
 Mathematical Models:
 damage_non_linear: Models non-linear damage behavior based on parameters.
@@ -40,7 +40,7 @@ y_train.csv
 y_test.csv
 Visualizations
 
-###Traction-Separation Law:
+### Traction-Separation Law:
 Visualizes the relationship between separation (δ) and traction (T).
 Output: Traction-Separation Law (TSL).png
 Damage vs Separation:
