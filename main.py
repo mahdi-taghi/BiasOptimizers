@@ -11,7 +11,7 @@ from tensorflow.keras.optimizers import Adam
 P = 850
 E = 120e9
 nu = 0.25
-
+#creat dataset
 sigma_max_values = np.linspace(10e6, 70e6, 4)
 delta_u_values = np.linspace(0.2e-3, 0.7e-3, 4)
 alpha_values = np.linspace(2, 7, 3)
@@ -42,3 +42,16 @@ columns = ['sigma_max', 'delta_u', 'delta_max', 'alpha', 'delta', 'damage', 'tra
 df = pd.DataFrame(data, columns=columns)
 
 df.to_csv('data.csv', index=False)
+
+x = df[['sigma_max', 'delta_u', 'delta_max', 'alpha', 'delta']]
+y = df['damage']
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+x_train.to_csv('X_train.csv', index=False)
+x_test.to_csv('X_test.csv', index=False)
+y_train.to_csv('y_train.csv', index=False)
+y_test.to_csv('y_test.csv', index=False)
+print("x_train shape:", x_train.shape)
+print("y_train shape:", y_train.shape)
+print("x_test shape:", x_test.shape)
+print("y_test shape:", y_test.shape)
